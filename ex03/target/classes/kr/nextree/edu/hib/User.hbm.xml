@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018. 3. 2. ???? 10:47:06 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="kr.nextree.edu.hib.User" table="tbl_board">
+        <id name="title" type="java.lang.String">
+            <column name="title" />
+            <generator class="assigned" />
+        </id>
+        <property name="content" type="java.lang.String">
+            <column name="content" />
+        </property>
+        <property name="writer" type="java.lang.String">
+            <column name="writer" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -26,7 +26,7 @@
 
 						<c:forEach items="${list}" var="boardVO">
 
-							<tr bgcolor="#ffffff" onmouseover="this.bgColor='#F6F6F6';" onmouseout="this.bgColor='#ffffff'">
+							<tr>
 								<td>${boardVO.bno}</td>
 								<td><a
 									href='/sboard/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&bno=${boardVO.bno}'>
