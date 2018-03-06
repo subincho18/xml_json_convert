@@ -1,3 +1,13 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -10,20 +20,20 @@
 <section class="content">
 
 
-			<div class="box">
-				<div class="box-header with-border">
-					<h3 class="box-title">게시판 리스트</h3>
-				</div>
-				<div class="box-body">
-					<table class="table table-bordered">
+			<div class="container">
+					<h3>게시판 리스트</h3>
+				<div class="table-responsive">
+				  <table class="table">
+				    <thead>
 						<tr>
-							<th style="width: 100px">글 번호</th>
+							<th>글번호</th>
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성날짜</th>
-							<th style="width: 100px">조회수</th>
+							<th>조회수</th>
 						</tr>
-
+					</thead>
+					 <tbody>
 						<c:forEach items="${list}" var="boardVO">
 
 							<tr>
@@ -40,8 +50,10 @@
 
 						</c:forEach>
 
-					</table>
-				</div>
+	    </tbody>
+	  </table>
+	</div>
+</div>
 				<!-- /.box-body -->
 
 
@@ -73,8 +85,21 @@
 
 				</div>
 				<!-- /.box-footer-->
-		<!-- 신규작성 버튼 -->
-		<button type="submit" class="btn btn-primary">새 글 작성</button>
+		<!-- 신규작성 버튼
+		<button type="submit" class="btn btn-primary">새 글 작성</button> -->
+				  <script>
+    $(function(){
+      // Initialization code
+		var formObj = $("form[role='form']");
+
+		console.log(formObj);
+		
+		$("ons-button").on("click", function() {
+			self.location = "/sboard/register";
+		});
+    });
+  </script>
+  <ons-button>새 글 작성</ons-button>
 		
 			</div>
 		</div>
@@ -133,3 +158,6 @@
 </script>
 
 <%@include file="../include/footer.jsp"%>
+
+</body>
+</html>
