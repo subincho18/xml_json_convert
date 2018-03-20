@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
+<title>XML-JSON 변환</title>
+
+<style>
+textarea{
+	width:250px;
+	height:250px;
+}
+</style>
+</head>
+<body>
+<h1><center>XML - JSON Converter</center></h1>
+<br/>
+	<div class="container-fluid">
+		<div class="row">
+			
+			<!-- buttons -->
+			<div class="col col-xs-3">
+				<br />
+				<button id="id-xml-to-json" type="button" class="btn btn-success btn-block">xml to json</button>
+					
+				<button id="id-json-to-xml" type="button" class="btn btn-warning btn-block">json to xml</button>			
+				<br />
+																	
+			</div>
+<br/>						
+
+			
+			<div class="col col-xs-1">
+			</div>
+		
+			
+			<!-- output -->
+			
+			<div class="col col-xs-7">
+	
+				<div id="xml-to-json" style="display:none;">
+					<h3>xml</h3>
+					<textarea class="form-control" rows="15"  id="input-xml"></textarea>
+					<br/>
+					
+					<button class="btn btn-default" type="button" id="convert-xml-to-json">
+					convert (xml -> json)
+					</button>
+					<button class="btn btn-default" type="button" id="clear-xml-to-json">
+					clear
+					</button>
+					
+					<br/>
+					<h3>json</h3>
+					<textarea class="form-control" rows="15" id="output-xml-to-json"></textarea>
+				</div>
+
+				<div id="json-to-xml" style="display:none;">
+				    <h3>json</h3>
+					<textarea class="form-control" rows="15" id="input-json"></textarea>
+					<br/>
+					
+					<button class="btn btn-default" type="button" id="convert-json-to-xml">
+					convert (json -> xml)
+					</button>
+					<button class="btn btn-default" type="button" id="clear-json-to-xml">
+					clear
+					</button>
+					
+					<br/><br/>
+					<h3>xml</h3>
+					<textarea class="form-control" rows="15" id="output-json-to-xml"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script>
+
+$("#id-xml-to-json").on("click",function(){
+	$("#output-xml-to-json").empty();
+	$("#xml-to-json").show();
+	$("#json-to-xml").hide();
+});
+
+$("#id-json-to-xml").on("click",function(){
+	$("#xml-to-json").hide();
+	$("#output-json-to-xml").empty();
+	$("#json-to-xml").show();
+});
+
+var url = "http://localhost:8090/";
+
+var xml2json = function(_data){
+	$.ajax({   
+	    type: "POST",   
+	    url: url + "xml2json",   
+	    data: _data,
+	    contentType : "application/xml",
+	    cache: false,
+		success : function(data) {   
+	    	$("#output-xml-to-json").html(JSON.stringify(data,null,4));
+		},
+		error : function(){
+			$("#output-xml-to-json").html("xml2json error");
+		}
+	});
+}
+
+var json2xml = function(_data){
+	$.ajax({   
+	    type: "POST",   
+	    url: url + "json2xml",   
+	    data: _data,
+	    contentType : "application/json",
+	    cache: false,
+		success : function(data) {  
+			var xmlText = new XMLSerializer().serializeToString(data);
+			xmlText = "<?xml version='1.0' encoding='utf-8'?>\n" + xmlText.substring(5, xmlText.length-6);
+	    	$("#output-json-to-xml").html(xmlText);
+		},
+		error : function(){
+			$("#output-json-to-xml").html("json2xml error");
+		}
+	});
+}
+
+$("#convert-xml-to-json").on("click",function(){
+	var data = $("#input-xml").val();
+	xml2json(data);
+});
+
+$("#convert-json-to-xml").on("click",function(){
+	var data = $("#input-json").val()
+	json2xml(data);
+});
+
+$("#clear-xml-to-json").on("click",function(){
+	location.reload();
+	$("#xml-to-json").show();
+
+});
+
+$("#clear-json-to-xml").on("click",function(){
+	location.reload();
+	$("#xml-to-json").show();
+});
+</script>
+
+</html>
